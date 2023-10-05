@@ -22,6 +22,7 @@ public class VideoJuegoServiceImpl implements VideoJuegoService{
 			VideoJuego juegoActualizar = juegoExistente.get();
 			juegoActualizar.setNombre(vj.getNombre());
 			videoJuegoRepository.save(juegoActualizar);
+			return juegoActualizar;
 		}
 		return null;
 	}
