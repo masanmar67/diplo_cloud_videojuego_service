@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>unam.diplomado.pixup</groupId>
 	<artifactId>videojuego-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>RC1.0</version>
 	<name>videojuego-service</name>
 	<description>Microservicio para administración de videojuegos</description>
 	<properties>
