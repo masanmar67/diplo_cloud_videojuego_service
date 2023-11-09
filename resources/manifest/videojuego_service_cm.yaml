@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-cm
+data:
+  mongo.conf: |
+    storage:
+      dbPath: /data/db
+  init-users.js: |
+    const adminDb = db.getSiblingDB('admin');
+    adminDb.createUser({user: "usuario_owner",pwd: "usuario_password",roles: [ "userAdminAnyDatabase","readWriteAnyDatabase"]});

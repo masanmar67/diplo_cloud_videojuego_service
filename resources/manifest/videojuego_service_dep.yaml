@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vjs-dep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vj-service
+  template:
+    metadata:
+      labels:
+        app: vj-service
+    spec:
+      containers:
+      - name: mongo
+        image: mongo
+        volumeMounts:
+        - name: mongo-initdb
+          mountPath: /docker-entrypoint-initdb.d
+      - name: vj-service-container
+        image: masanmar67/cloud-videojuego-service:v2
+        ports:
+        - containerPort: 8084
+      volumes:
+      - name: mongo-initdb
+        configMap:
+          items:
+          - key: init-users.js
+            path: init-users.js
+          name: mongo-cm
+

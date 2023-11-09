@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vj-service-srv
+spec:
+  selector:
+    app: vj-service
+  ports:
+  - protocol: TCP
+    port: 8084
+    targetPort: 8084
+  type: NodePort
