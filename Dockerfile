@@ -1,6 +1,5 @@
 FROM openjdk:17-oracle
 MAINTAINER Miguel Angel Sanchez MArtinez(masanmar70@gmail.com)
-# a default value
 ENV MONGO_HOSTNAME mongodb1
 ENV MONGO_PORT 27017
 ENV MONGO_AUTHDB admin
