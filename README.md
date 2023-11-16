@@ -1,23 +1,28 @@
 # diplo_cloud_videojuego_service
 Repositorio para el microservicio de videojuegos
 
-# Configuración del ambiente
+# Funcionalidad
 
-Se deben definir las siguientes variables de ambiente
+Esta aplicación expone una api rest, con las funciones necesarias para registrar y actualizar la información en una base de datos
 
-|Propiedad             | Valor                                                           |
-|----------------------|-----------------------------------------------------------------|
-|MONGO_HOSTNAME        | IP del la abse de datos de mongodb                              |
-|MONGO_PORT		       | Puerto de la base de datos mongodb                              |
-|MONGO_AUTHDB          | Base de datos administrativa de mongodb                         |
-|MONGO_DB              | Nombre de la base de datos de la aplicación                     |
-|MONGO_USR             | Usuario para realizar la conexión a mongodb                     |
-|MONGO_PWD             | Contraseña del usuario para realizar la conexión a momgo DB     |
-|TOMCAT_PORT           | 8084                                                            |
+# Descarga de la aplicacoón
 
-# Dependencias
+Para obtener el código fuente, es necessrio obtenerlo de github usando la siguiente instrucción en la línea de comandos
 
-Esta aplicación requiere para su funcionamiento de una conexión a la base de datos MongoDB, versión 4.2.21
+https://github.com/masanmar67/diplo_cloud_videojuego_service.git
+
+# Construir la aplicación
+
+Dentro la carpeta resources/manifest se encuentran los archivos necesarios para desplegar la aplicación en un cluster de kubernetes y exponer el servicio. Para ello se deben ejecutar las siguentes instrcciones en el orden dado
+
+kubectl apply -f videojuego_service_cm.yaml
+
+kubectl apply -f videojuego_service_dep.yaml
+
+kubectl apply -f videojuego_service_srv.yaml
+
+kubectl apply -f videojuego_service_ingress.yaml
+
 
 # REST API
 
@@ -29,7 +34,7 @@ Estos son los servicios para la administración de videojuegos de la aplicación
 
 `GET /api/videojuego`
 
-    curl -i -H 'Accept: application/json' http://localhost:8084/api/videojuego
+    curl -i -H 'Accept: application/json' http://k8s.nuup.ninja:8084/api/videojuego
 
 ### Response
 
@@ -52,7 +57,7 @@ Date: Thu, 05 Oct 2023 17:43:50 GMT
 curl --header "Content-Type: application/json" \
 	 --request POST \
 	 --data '{"nombre":"videojuego1","genero":"aventura","clasificación":"para todo publico"}' \
-	 http://localhost:8084/api/videojuego	
+	 http://k8s.nuup.ninja:8084/api/videojuego	
 
 ### Response
 
@@ -64,7 +69,7 @@ curl --header "Content-Type: application/json" \
 
 `PUT /api/videojuego/{id}`
 
-	curl -X PUT -H "Content-Type: application/json" -d '{"key1":"value"}' http://localhost:8084/api/videojuego/{id}
+	curl -X PUT -H "Content-Type: application/json" -d '{"key1":"value"}' http://k8s.nuup.ninja:8084/api/videojuego/{id}
 
 ### Response
 
@@ -77,7 +82,7 @@ curl --header "Content-Type: application/json" \
 
 `DELETE /api/videojuego/{id}`
 
-    curl -i -H 'Accept: application/json' -X DELETE http://localhost:8084/api/videojuego/{id}
+    curl -i -H 'Accept: application/json' -X DELETE http://k8s.nuup.ninja:8084/api/videojuego/{id}
 
 ### Response
 
@@ -86,4 +91,3 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Date: Thu, 05 Oct 2023 18:00:47 GMT
-
