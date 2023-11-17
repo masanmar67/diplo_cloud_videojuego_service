@@ -91,3 +91,14 @@ Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
 Date: Thu, 05 Oct 2023 18:00:47 GMT
+
+## Estrategia de ramas
+
+Para este proyecto la rama main contendrá el código en producción. Existirá una rama dev para generar la aplicación para pruebas en ambiente de desarrollo.
+
+Cada desarrollador usrá una rama feature para realizar sus cambios en el código. Estas ramas se tomarán a partir de la rama dev, y al terminar el cambio se uniran nuevamente a la rama dev
+
+![image](estrategia-ramas.png)
+
+
+
