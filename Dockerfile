@@ -1,4 +1,4 @@
-FROM openjdk:17-oracle
+FROM docker.io/openjdk:17.0.2-slim
 MAINTAINER Miguel Angel Sanchez MArtinez(masanmar70@gmail.com)
 # a default value
 ENV MONGO_HOSTNAME localhost
