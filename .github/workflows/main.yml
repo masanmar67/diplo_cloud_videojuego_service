@@ -48,4 +48,4 @@ jobs:
       - name: Build and Deploy to OpenShift
         run: |
           oc project tekton-demo
-          oc apply -f ./manifests/notificaciones.yaml
+          oc apply -f ./resources/manifests/videojuego_service_dep.yaml
