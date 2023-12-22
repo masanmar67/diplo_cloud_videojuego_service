@@ -47,5 +47,5 @@ jobs:
           
       - name: Build and Deploy to OpenShift
         run: |
-          oc project user17
-          oc apply -f ./resources/manifests/videojuego_service_dep.yaml
+          oc project tekton-demo
+          oc apply -f ./manifests/notificaciones.yaml
