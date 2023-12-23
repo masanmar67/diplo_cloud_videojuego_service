@@ -51,4 +51,4 @@ jobs:
           pwd
           ls
           oc project user17
-          oc apply -f ./resources/manifests/videojuego_service_dep.yaml
+          oc apply -f ./resources/manifest/videojuego_service_dep.yaml
