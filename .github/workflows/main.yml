@@ -43,6 +43,7 @@ jobs:
           
       - name: Test Working Dir
         run: |
+          cd /home/runner/work/diplo_cloud_videojuego_service/diplo_cloud_videojuego_service
           echo "Verifying working directory: " ${pwd} 
           
       - name: Build and Deploy to OpenShift
