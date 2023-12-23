@@ -48,5 +48,6 @@ jobs:
           
       - name: Build and Deploy to OpenShift
         run: |
+          pwd
           oc project user17
           oc apply -f ./diplo_cloud_videojuego_service/resources/manifests/videojuego_service_dep.yaml
