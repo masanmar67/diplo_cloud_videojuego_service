@@ -3,7 +3,7 @@ Repositorio para el microservicio de videojuegos
 
 # Funcionalidad
 
-Esta aplicación expone una api rest, con las funciones necesarias para registrar y actualizar la información en la base de datos MongoDB
+Esta aplicación expone una api rest, con las funciones necesarias para registrar y actualizar la información en la base de datos MongoDB.
 
 # Descarga de la aplicacoón
 
