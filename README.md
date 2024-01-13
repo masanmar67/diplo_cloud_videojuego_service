@@ -3,7 +3,7 @@ Repositorio para el microservicio de videojuegos
 
 # Funcionalidad
 
-Esta aplicación expone una api rest, con las funciones necesarias para registrar y actualizar la información en una base de datos
+Esta aplicación expone una api rest, con las funciones necesarias para registrar y actualizar la información en una base de datos de MongoDB.
 
 # Descarga de la aplicacoón
 
@@ -13,16 +13,49 @@ https://github.com/masanmar67/diplo_cloud_videojuego_service.git
 
 # Construir la aplicación
 
-Dentro la carpeta resources/manifest se encuentran los archivos necesarios para desplegar la aplicación en un cluster de kubernetes y exponer el servicio. Para ello se deben ejecutar las siguentes instrcciones en el orden dado
+Dentro la carpeta [resources/manifest] (https://github.com/masanmar67/diplo_cloud_videojuego_service/tree/main/resources/manifest) se encuentran los archivos necesarios para desplegar la aplicación en un cluster de kubernetes y exponer el servicio. Para ello se deben ejecutar las siguentes instrcciones en el orden dado
 
-kubectl apply -f videojuego_service_cm.yaml
+Creación del ConfigMap con valores necesarios para usar la aplicación
 
-kubectl apply -f videojuego_service_dep.yaml
+`kubectl apply -f videojuego_service_cm.yaml`
 
-kubectl apply -f videojuego_service_srv.yaml
+Creación del deployment para generar el pod de kubernetes el cual alberga tanto la aplicación como el servidor de base de datos MongoDB
 
-kubectl apply -f videojuego_service_ingress.yaml
+`kubectl apply -f videojuego_service_dep.yaml`
 
+Creación del service para el acceso al pod
+
+`kubectl apply -f videojuego_service_srv.yaml`
+
+Creación del recurso Ingress para poder usar el servicio desde equipos externos
+
+`kubectl apply -f videojuego_service_ingress.yaml`
+
+Para el despliegue de la aplicación, en la carpeta [resources/tekton] (https://github.com/masanmar67/diplo_cloud_videojuego_service/tree/main/resources/tekton) se encuentran los archivos necesarios para crear un event listener. Con la ayuda de este listener, y por medio de un trigger template, se ejecuta el pipeline el cual se encarga de descargar el código fuente, compilar, crear la imagen de docker y desplegar el pod que alberga la aplicación.
+
+En GitHub se crea un recurso Webhook, con el fin de ejecutar el pipeline cuando se registre un cambio en los archivos del repositorio. Este webhook puede hacer una petición al event listener ya que este se encuentra expuesto al exterior por medio de un recurso router de openshift. La url donde se hacen las peticiones al event listener es http://el-tekton-event-listener-user17.apps.ocp-poc-singlenode.nuup.rocks
+
+Las siguientes instrucciones se encargan de crear estos recursos.
+
+Creación del pipeline
+
+`kubectl apply -f pipeline-vjs.yaml`
+
+Creación del trigger template, el cual define el pipelinerun a ejecutar.
+
+`kubectl apply -f trigger_template.yaml`
+
+Creación del trigger binding, con unos parámetros a usar en el pipeline run, algunos de ellos provenientes de la petición del webhook de GitHub
+
+`kubectl apply -f trigger_binding.yaml`
+
+Creación del event listener
+
+`kubectl apply -f event_listener.yaml`
+
+Y esta instrucción expone el event listener como un recurso route de openshift, para realizar peticiones desde un recurso externo, que para este caso es el webhook definido en GitHub
+
+`oc expose svc/el-tekton-event-listener`
 
 # REST API
 

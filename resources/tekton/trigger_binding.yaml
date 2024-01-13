@@ -1,0 +1,14 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerBinding
+metadata:
+  name: tekton-trigger-binding
+spec:
+  params:
+  - name: repo-url
+    value: $(body.repository.clone_url)
+  - name: tag-name
+    value: main #$(body.repository.default_branch)
+  - name: image-full-path-with-tag
+    value: docker.io/masanmar67/cloud-videojuego-service:latest
+  - name: deleteExisting
+    value: 'true'

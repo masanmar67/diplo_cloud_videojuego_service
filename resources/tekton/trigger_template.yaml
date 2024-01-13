@@ -1,0 +1,57 @@
+---
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: tekton-trigger-template
+spec:
+  params:
+    - name: repo-url
+      description: The git repository URL to clone from.
+    - name: tag-name
+      description: The git tag to clone.
+    - name: image-full-path-with-tag
+      description: The image full path to host the built image, with version tag, e.g. image-registry.openshift-image-registry.svc:5000/tekton-pipelines/spring-boot-docker:v1.0.0.
+    - name: deleteExisting
+      description: Deletes existing image.
+  resourcetemplates:
+    - apiVersion: tekton.dev/v1beta1
+      kind: PipelineRun
+      metadata:
+        generateName: pipelinerun-deploy-
+      spec:
+        serviceAccountName: pipeline
+        taskRunSpecs:
+          - pipelineTaskName: buildah
+            taskServiceAccountName: tekton-pipeline
+        pipelineRef:
+          name: pipeline-git-clone-build-push-deploy
+        params:
+          - name: repo-url
+            value: $(tt.params.repo-url)
+          - name: tag-name
+            value: $(tt.params.tag-name)
+          - name: image-full-path-with-tag
+            value: $(tt.params.image-full-path-with-tag)
+          - name: deleteExisting
+            value: $(tt.params.deleteExisting)
+          - name: maven-image
+            value: maven:3-eclipse-temurin-17-alpine
+        workspaces:
+          - name: ws-clone
+            #emptyDir: {}
+            persistentVolumeClaim:
+              claimName: shared-workspace
+          - name: ws-dir
+            persistentVolumeClaim:
+              claimName: shared-workspace
+          - name: maven-settings
+            configmap:
+              name: maven-settings
+          - name: ws-source
+            persistentVolumeClaim:
+              claimName: shared-workspace
+          - name: workspace
+            persistentvolumeclaim:
+              claimName: shared-workspace
+          - name: empty-dir
+            emptyDir: {}
