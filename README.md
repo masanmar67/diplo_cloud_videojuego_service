@@ -13,7 +13,7 @@ https://github.com/masanmar67/diplo_cloud_videojuego_service.git
 
 # Construir la aplicación
 
-Dentro la carpeta [resources/manifest] (https://github.com/masanmar67/diplo_cloud_videojuego_service/tree/main/resources/manifest) se encuentran los archivos necesarios para desplegar la aplicación en un cluster de kubernetes y exponer el servicio. Para ello se deben ejecutar las siguentes instrcciones en el orden dado
+Dentro la carpeta [resources/manifest](https://github.com/masanmar67/diplo_cloud_videojuego_service/tree/main/resources/manifest) se encuentran los archivos necesarios para desplegar la aplicación en un cluster de kubernetes y exponer el servicio. Para ello se deben ejecutar las siguentes instrcciones en el orden dado
 
 Creación del ConfigMap con valores necesarios para usar la aplicación
 
@@ -31,7 +31,7 @@ Creación del recurso Ingress para poder usar el servicio desde equipos externos
 
 `kubectl apply -f videojuego_service_ingress.yaml`
 
-Para el despliegue de la aplicación, en la carpeta [resources/tekton] (https://github.com/masanmar67/diplo_cloud_videojuego_service/tree/main/resources/tekton) se encuentran los archivos necesarios para crear un event listener. Con la ayuda de este listener, y por medio de un trigger template, se ejecuta el pipeline el cual se encarga de descargar el código fuente, compilar, crear la imagen de docker y desplegar el pod que alberga la aplicación.
+Para el despliegue de la aplicación, en la carpeta [resources/tekton](https://github.com/masanmar67/diplo_cloud_videojuego_service/tree/main/resources/tekton) se encuentran los archivos necesarios para crear un event listener. Con la ayuda de este listener, y por medio de un trigger template, se ejecuta el pipeline el cual se encarga de descargar el código fuente, compilar, crear la imagen de docker y desplegar el pod que alberga la aplicación.
 
 En GitHub se crea un recurso Webhook, con el fin de ejecutar el pipeline cuando se registre un cambio en los archivos del repositorio. Este webhook puede hacer una petición al event listener ya que este se encuentra expuesto al exterior por medio de un recurso router de openshift. La url donde se hacen las peticiones al event listener es http://el-tekton-event-listener-user17.apps.ocp-poc-singlenode.nuup.rocks
 
